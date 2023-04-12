@@ -26,6 +26,23 @@ const paperSchema = new Schema({
     default: 'pending',
     enum: ["pending", "accept", "reject"]
    },
+   overall_score:{
+    type: Number,
+    default: 0,
+    enum: [-2,-1,0,1,2]
+   },
+   reviewer_comment:{
+    type:String,
+    default: '',
+  },
+  private_comment:{
+    type:String,
+    default: '',
+  },
+  isDraft:{
+    type:Boolean,
+    default: false
+  },
   user_id:{
     type:String,
     required:true

@@ -19,6 +19,9 @@ export const papersReducer = (state, action) => {
     case 'UPDATE_PAPER':
       return {papers: state.papers.map((w) =>  w._id === action.payload._id ? action.payload : w)
       }
+    case 'UPDATE_USER':
+        return {users: state.users.map((w) =>  w._id === action.payload._id ? action.payload : w)
+        }  
     default:
       return state
   }

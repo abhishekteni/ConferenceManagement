@@ -26,7 +26,7 @@ const getPapers = async (req, res) => {
 const getallUser = async (req, res) => {
 
 
-  const user_id = req.user._id
+  // const user_id = req.user._id
   const email_id = req.user.email
   const admin = req.user.role
   // console.log(admin)
@@ -62,6 +62,10 @@ const getPaper = async (req, res) => {
 const createPaper = async (req, res) => {
   const {papertitle, authors, keywords,abstract,pdf_attachment} = req.body
   const blog_status="pending"
+  const overall_score = 0
+  const reviewer_comment=''
+  const private_comment=''
+  const isDraft=false;
   let emptyFields = []
 
   if(!papertitle) {
@@ -87,7 +91,7 @@ const createPaper = async (req, res) => {
   try {
     const user_id= req.user._id
     
-    const paper = await Paper.create({papertitle, authors, keywords,abstract,pdf_attachment,blog_status:blog_status|| "pending" ,user_id})
+    const paper = await Paper.create({papertitle, authors, keywords,abstract,pdf_attachment,blog_status:blog_status|| "pending" ,overall_score:overall_score||0,reviewer_comment:reviewer_comment||'', private_comment:private_comment||'', isDraft:isDraft, user_id})
     res.status(200).json(paper)
   } catch (error) {
     res.status(400).json({error: error.message})
@@ -130,7 +134,41 @@ const updatePaper = async (req, res) => {
   res.status(200).json(paper)
 }
 
+const updateUser = async (req, res) => {
+  const { id } = req.params
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such user'})
+  }
+
+  const user = await User.findOneAndUpdate({_id: id}, {
+    ...req.body
+  },{new: true})
+
+  if (!user) {
+    return res.status(400).json({error: 'No such user'})
+  }
+
+  res.status(200).json(user)
+}
+
+const updateallPaper = async (req, res) => {
+  const { id } = req.params
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such paper'})
+  }
+
+  const paper = await Paper.find({}, {
+    ...req.body
+  },{new: true})
+
+  if (!paper) {
+    return res.status(400).json({error: 'No such paper'})
+  }
+
+  res.status(200).json(paper)
+}
 
 
 module.exports = {
@@ -139,5 +177,7 @@ module.exports = {
   createPaper,
   deletePaper,
   updatePaper,
+  updateallPaper,
+  updateUser,
   getallUser
 }

@@ -5,7 +5,9 @@ const {
   getPaper,
   deletePaper,
   updatePaper,
-  getallUser
+  updateallPaper,
+  getallUser,
+  updateUser
 } = require('../controllers/paperController')
 
 const requireAuth =require('../middleware/requireAuth')
@@ -18,6 +20,9 @@ router.get('/', getPapers)
 
 // Fetch all user
 router.get('/admin123', getallUser)
+
+// Update a user
+router.put('/admin123/:id', updateUser)
 
 //GET a single paper
 router.get('/:id', getPaper)
@@ -33,6 +38,7 @@ router.delete('/:id', deletePaper)
 // UPDATE a paper
 router.put('/:id', updatePaper)
 
-
+// UPDATE all paper
+router.put('/', updateallPaper)
 
 module.exports = router

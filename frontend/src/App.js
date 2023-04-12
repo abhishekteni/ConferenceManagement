@@ -6,7 +6,15 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
 import PaperForm from './components/PaperForm';
-
+import ProfileDetails from './pages/ProfileDetails'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import NotFound from './pages/NotFound';
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
   const {user}=useAuthContext()
@@ -16,15 +24,16 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
+         
             <Route 
               path="/"
               element={user ? <Home />:<Navigate to='/login'/>}
             />
-     { /*      <Route 
-              path="/add"
-              element={user  ? <PaperForm />:<Navigate to='/login'/>}
+           <Route 
+              path="/data"
+              element={user  ? <ProfileDetails/>:<Navigate to='/login'/>}
             />
-     */}
+     
             <Route 
             path="/login"
             element={!user ? <Login />:<Navigate to='/'/>}
@@ -32,6 +41,10 @@ function App() {
           <Route 
           path="/signup"
           element={!user ? <Signup />:<Navigate to='/'/>}
+        />
+        <Route 
+        path='*'
+          element={user ? <NotFound />:<Navigate to='/login'/>}
         />
           </Routes>
         </div>
