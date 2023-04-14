@@ -1,10 +1,11 @@
+import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { useLogout } from '../hooks/useLogout'
 import DarkMode from './Darkmode'
 import "./DarkMode.css";
-const Navbar = () => {
+const MyNavbar = () => {
   const logout = useLogout()
 
   const navRef=useRef();
@@ -25,7 +26,7 @@ const shownavbar=()=>{
 
   const {user}=useAuthContext()
   return (
-    <header>
+    <Navbar>
       <div className="container">
         <Link to="/">
           <h1 className='logo_design'>Confe<b style={{color:"red"}}>Rence</b> Management</h1>
@@ -37,7 +38,7 @@ const shownavbar=()=>{
         <div className='navlink_con'>
         <span>{user.email}</span>
         <Link to="/data">
-        <h1>{user.role}</h1>
+        <h4>{user.role}</h4>
        
       </Link>
          <button onClick={handleClick}>Logout</button>
@@ -66,9 +67,10 @@ const shownavbar=()=>{
         <div className='line1'></div>
         </div>
       </div>
-     
-    </header>
+    </Navbar>
+
+
   )
 }
 
-export default Navbar
+export default MyNavbar

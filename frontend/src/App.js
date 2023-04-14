@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route,Navigate } from 'react-router-dom'
 // pages & components
 import Home from './pages/Home'
-import Navbar from './components/Navbar'
+import MyNavbar from './components/MyNavbar'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+        <MyNavbar />
         <div className="pages">
           <Routes>
          
