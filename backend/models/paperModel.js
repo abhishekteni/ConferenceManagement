@@ -18,8 +18,7 @@ const paperSchema = new Schema({
     type: String
   },
   pdf_attachment:{
-    type: String,
-    required: true
+    type: String
   },
   blog_status: {
     type: String,

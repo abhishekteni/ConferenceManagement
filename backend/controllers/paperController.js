@@ -1,18 +1,46 @@
 const Paper = require('../models/paperModel')
 const User = require('../models/userModel')
-
+// const multer = require('multer')
 const mongoose = require('mongoose')
-
+// const fs = require('fs');
 // get all papers
 const getPapers = async (req, res) => {
 
 
   const user_id = req.user._id
   const admin = req.user.role
+  const search = req.query.u
+  const page = req.query.p||0
+  const papersPerPage = 8
   // console.log(admin)
-  if(admin=='admin'||admin=='reviewer'){
+  if(admin=='admin'){
+      const papers = await Paper.find({}).sort({createdAt: -1}).skip(page*papersPerPage).limit(papersPerPage)
+      res.status(200).json(papers)
 
-    const papers = await Paper.find({}).sort({createdAt: -1})
+    
+  }
+  else if(admin=='reviewer'){
+    const papers = await Paper.find({blog_status:"pending"}).sort({createdAt: -1})
+    res.status(200).json(papers)
+  }
+  else{
+    const papers = await Paper.find({user_id}).sort({createdAt: -1})
+    res.status(200).json(papers)
+  }
+}
+
+const getallPapers = async (req, res) => {
+
+
+  const user_id = req.user._id
+  const admin = req.user.role
+  // console.log(admin)
+  if(admin=='admin'){
+      const papers = await Paper.find({}).sort({createdAt: -1})
+      res.status(200).json(papers)
+  }
+  else if(admin=='reviewer'){
+    const papers = await Paper.find({blog_status:"pending"}).sort({createdAt: -1})
     res.status(200).json(papers)
   }
   else{
@@ -173,6 +201,7 @@ const updateallPaper = async (req, res) => {
 
 module.exports = {
   getPapers,
+  getallPapers,
   getPaper,
   createPaper,
   deletePaper,

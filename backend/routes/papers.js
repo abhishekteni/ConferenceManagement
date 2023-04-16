@@ -1,4 +1,6 @@
 const express = require('express')
+
+
 const {
   createPaper,
   getPapers,
@@ -7,16 +9,24 @@ const {
   updatePaper,
   updateallPaper,
   getallUser,
-  updateUser
+  updateUser,
+  getallPapers
 } = require('../controllers/paperController')
 
 const requireAuth =require('../middleware/requireAuth')
+// const uploadPdfMiddleware = require('../middleware/upload')
+// const upload = require('../middleware/upload')
+
+
+
 const router = express.Router()
 // require auth for all paper routes
 router.use(requireAuth)
-// GET all papers
+// GET papers with pagination
 router.get('/', getPapers)
 
+// GET papers without pagination
+router.get('/all', getallPapers)
 
 // Fetch all user
 router.get('/admin123', getallUser)
@@ -30,7 +40,7 @@ router.get('/:id', getPaper)
 
 
 // POST a new paper
-router.post('/', createPaper)
+router.post('/',createPaper)
 
 // DELETE a paper
 router.delete('/:id', deletePaper)
