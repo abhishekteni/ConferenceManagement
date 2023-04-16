@@ -14,15 +14,11 @@ import Paper from '@mui/material/Paper';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import TableSortLabel from '@mui/material/TableSortLabel';
-// import zIndex from '@mui/material/styles/zIndex'
-// import { DataGrid } from '@material-ui/data-grid'
-// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([
   ]);
-  // const [length,setLength]=useState(1)
   const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState('papertitle')
   const {papers, dispatch} = usePapersContext()
@@ -34,31 +30,6 @@ const Home = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
- 
-  // const handleUpdate = async(paper) => {
-  //   const updatedData = data.map((item) => {
-  //     // update the name of each item in the data array
-  //     return { ...item, blog_status: "accept" };
-  //   });
-  
-  //   // send a PUT request to update the data on the server
-  //   const response = await fetch('/api/papers/' + paper._id, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization':`Bearer ${user.token}`
-  //     },
-  //     body: JSON.stringify(updatedData),
-  //   })
-  //   const json = await response.json()
-    
-  //   if (response.ok) {
-  //     dispatch({type: 'UPDATE_PAPER', payload: json})
-  //   }
-  // } 
-
-  // Fetch papers
 
 
   useEffect(() => {
@@ -72,7 +43,6 @@ const Home = () => {
       const json = await response.json()
 
       if (response.ok) {
-        // console.log(json)
         function sortData(data, columnName) {
           for (let i = 0; i < data.length - 1; i++) {
             for (let j = i + 1; j < data.length; j++) {
@@ -138,7 +108,6 @@ const Home = () => {
         )):<TableCell className='empty_tag'>"no papers"</TableCell>}
         
         </TableBody>
-         {/*<button onClick={handleUpdate}>Update Column</button>*/}
         </Table>
         </TableContainer>
         { page >0? <button className='pagination_btn' onClick={handlePreviousPage}>&lt;</button> : <button className='pagination_btn' >&lt;</button>}
@@ -161,10 +130,10 @@ const Home = () => {
       }}>
         +
       </Button>
-      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { position: "fixed", width: "50%" ,top: 10, left: 10, m: 0, p:2 } }} >
+      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { position: "fixed", width: "50%" ,top: 10, left: 'auto', m: 0, p:2 } }} >
       <PaperForm />
       </Dialog>
-      {/*<div className='notification'>
+      <div className='notification'>
         <p>Welcome, {user.email}</p>
         <span className='notification__progress'></span>
       </div>
@@ -172,7 +141,6 @@ const Home = () => {
    
       
       <div style={{ height: 400, width: '100%' }}>
- */}
     </div>
     </>
   )

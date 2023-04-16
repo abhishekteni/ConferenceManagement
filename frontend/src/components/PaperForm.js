@@ -9,7 +9,6 @@ const PaperForm = () => {
   const [keywords, setKeywords] = useState('')
   const [abstract, setAbstract] = useState('')
   const [pdf_attachment, setPdf_attachment] = useState('')
-  // const [isFilePicked, setIsFilePicked] = useState(false);
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
 
@@ -41,7 +40,6 @@ const PaperForm = () => {
         setKeywords('')
         setAbstract('')
         setPdf_attachment('')
-        // setIsFilePicked(null)
         setError(null)
         setEmptyFields([])
         console.log('new paper added', json)

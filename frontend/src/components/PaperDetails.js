@@ -1,11 +1,9 @@
 import { usePapersContext } from '../hooks/usePapersContext'
 import { useAuthContext } from '../hooks/useAuthContext'
-// date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
-// import { Input } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -27,7 +25,6 @@ const PaperDetails = ({ paper }) => {
 
   const [selectedOption, setSelectedOption] = useState('pending');
   const [open, setOpen] = useState(false);
-  // const [acceptall,SetAcceptall]=useState(false)
   const [reviewerC,setReviewerC]=useState('')
   const [privateC,setPrivateC]=useState('')
   const [reviewername,setReviewerName]=useState('')
@@ -49,12 +46,8 @@ const PaperDetails = ({ paper }) => {
     const private_comment = privateC
     const overall_score2=overall_score1;
     const isDraft=draft_status;
-    // console.log(overall_score2+"agfebf")
-    // console.log(value+"ballo");
-    // console.log(isDraft);
     setSelectedOption(e.target.value);
-    // setBlogstatus(value)
-    // console.log(selectedOption+"hello")
+
     if(!user){
       return
     }
@@ -128,7 +121,7 @@ const PaperDetails = ({ paper }) => {
     { (user.role==="admin")? <TableCell align="right">   
     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
  
-{/*<InputLabel id="demo-simple-select-standard-label">{paper.blog_status}</InputLabel>*/}
+
 <Select
   labelId="demo-simple-select-standard-label"
   id="demo-simple-select-standard"
@@ -139,7 +132,7 @@ const PaperDetails = ({ paper }) => {
   <MenuItem value="accept" >accept</MenuItem>
   <MenuItem value="reject" >reject</MenuItem>
 </Select>
-{/*<Button variant="outlined" onChange={handleChange}>update</Button>*/}
+
 </FormControl>
 
     </TableCell>
@@ -180,7 +173,7 @@ const PaperDetails = ({ paper }) => {
         <p className='dialog_sub'>Private Comments to other reviewer or Admin:</p>
         <DialogContentText>
         {((paper.isDraft===false)  && (paper.reviewer_comment.split(':??')[1] === user.email.split('@')[0]))? paper.private_comment : ''}
-      { /*(user.role=="admin" || user.role=="reviewer" )? paper.private_comment : ''*/}
+      
       
        </DialogContentText>
        </DialogContent>

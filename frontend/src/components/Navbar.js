@@ -11,13 +11,7 @@ const Navbar = () => {
   const handleClick=()=>{
     logout()
   }
-//   const setDarkMode=()=>{
-//     const hamburger=document.querySelector(".hamburger")
-//     hamburger.onClick=()=>{
-//       const navBar=document.querySelector("navbar_io")
-//       navBar.classList.toggle("active")
-//     }
-// }
+
 
 const shownavbar=()=>{
   navRef.current.classList.toggle('active')
