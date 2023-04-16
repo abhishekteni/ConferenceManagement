@@ -12,6 +12,7 @@
 }
 
 [data-theme="dark"]{
+  --primary: #1aac83;
   --body_background:#282C34;
   --table_background:#1e1f23;
   --body_color: white;
@@ -19,16 +20,59 @@
   --link_color:cyan;
   --text_color:white;
 }
+
+
+
 *{
   transition: all 0.3s ease-in-out;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--nav_background); 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 body {
   background: var(--body_background);
   margin: 0;
   font-family: "Poppins";
-
+  
 }
-
+.navbar-brand .logo_design{
+  font-size: 35px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+.user_role{
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 10px;
+  text-transform: capitalize;
+}
+.log_role{
+  font-size: 20px;
+  font-weight: 750;
+  margin-top: 10px;
+  color: var(--text_color);
+ 
+}
+.navbar-brand .user_role:hover{
+ color: var(--primary);
+ transition: 0.5s ease-in;
+}
 thead {
   background: var(--body_background);
  
@@ -118,9 +162,21 @@ header a {
 .paper-details .MuiSelect-select{
   color: var(--text_color);
 }
-
+.MuiInputBase-root .MuiSelect-select{
+  color: var(--text_color);
+  text-decoration-color: red;
+}
+.MuiList-root .MuiMenuItem-gutters{
+  color: var(--text_color);
+}
+.MuiInputBase-root .MuiInput-input{
+  fill: var(--text_color);
+}
 .paper-details svg {
   fill: var(--text_color);
+}
+.MuiInputBase-root svg{
+  color: var(--text_color);
 }
 .paper-details h4 {
   margin: 0 0 10px 0;
@@ -221,8 +277,12 @@ form.signup, form.Login{
   background: var(--nav_background);
   border-radius: 4px;
   color: var(--text_color);
+  text-transform: capitalize;
 }
-
+form.signup h3, form.Login h3{
+  font-size: 20px;
+  padding: 20px 0px 20px 0px;
+}
 .box{
   padding: 20px 10px;
   max-width: 1000px;
@@ -263,26 +323,127 @@ form.signup, form.Login{
   background-color: var(--body_background);
 }
 
-.create label,h3{
+.MuiTypography-h6{
+  color: var(--primary);
+}
+.MuiDialogContent-root .dialog_sub{
+  color: var(--primary);
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  font-weight: 300;
+}
+.MuiInputLabel-root{
+  color: #1aac83;
+}
+.MuiMenuItem-gutters{
+  color: var(--text_color);
+}
+.MuiTableHead-root tr th{
+color: var(--primary);
+background-color: var(--nav_background);
+text-transform: capitalize;
+font-weight: 600;
+}
+
+.MuiPopover-root .MuiMenu-root{
+  color: red;
+}
+.pagination_btn{
+  
+  color:var(--primary);
+  background: none;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  border-radius: 50%;
+  border: 0.5px solid var(--text_color);
+  margin-right: 50px;
+  
+  margin-top: 20px;
+}
+.create label{
   
   color: var(--text_color);
+}
+.create h3{
+  color: var(--primary);
+  font-weight: 600;
 }
 .create input{
   border: 1px solid var(--text_color);
 }
+.empty_tag{
+  position: absolute;
+  width: 80vw;
+  /* background: var(--nav_background); */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text_color);
+}
+.card_container{
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.card_container .card_box .MuiPaper-root{
+  background-color: var(--nav_background);
+  color: var(--text_color);
+  border-radius: 10px;
+}
+
+.notification{
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+  width: max-content;
+  padding: 20px 15px;
+  border-radius: 4px;
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.1);
+  transform: translateY(30px);
+  opacity: 0;
+  visibility: hidden;
+  animation: fade-in 4s linear forwards;
+}
+.notification__progress{
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: calc(100%-10px);
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background-image: linear-gradient(to right
+  ,#539bdb,#3250bf);
+  border-radius: inherit;
+  animation: load 3s 0.25s linear forwards;
+}
+
+@keyframes fade-in{
+  5%{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  90%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes load {
+  to{
+    transform: scaleX(1);
+  }
+}
+
 @media only screen and (max-width:1320px) {
   header{
     padding: 0 50px;
   }
-}
-
-@media only screen and (max-width:1100px) {
-  header{
-    padding: 0 50px;
-  }
-}
-
-@media only screen and (max-width:900px) {
   .hamburger{
     display: block;
     cursor: pointer;
@@ -295,13 +456,14 @@ form.signup, form.Login{
 
   }
   .navbar_io{
-    height: 450px;
+    height: 500px;
     position: absolute;
-    top: 80px;
+    top: 50px;
     left: 0;
     right: 0;
     width: 100vw;
     background: var(--nav_background);
+    opacity: 0.8;
     transition: 0.2s ;   
     overflow: hidden;
     z-index: +2; 
@@ -331,6 +493,132 @@ form.signup, form.Login{
   }
   .navbar_io.active{
     display: none;
+  }
+}
+
+@media only screen and (max-width:1100px) {
+  header{
+    padding: 0 50px;
+  }
+
+  .hamburger{
+    display: block;
+    cursor: pointer;
+  }
+  .hamburger .line1{
+    width: 30px;
+    height: 3px;
+    background: var(--text_color);
+    margin: 6px 0 ;
+
+  }
+  .navbar_io{
+    height: 500px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    background: var(--nav_background);
+    opacity: 0.8;
+    transition: 0.2s ;   
+    overflow: hidden;
+    z-index: +2; 
+  }
+  
+ 
+  .navbar_io .navlink_con{
+    display: block;
+  
+  }
+  .navbar_io .navlink_con{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    margin-bottom: 200px;
+    
+    width: fit-content;
+    margin: 20px auto 0 auto;
+   
+    transition: 0.5s;
+  }
+  .logo_design{
+    display: none;
+  }
+  .navbar_io.active{
+    display: none;
+  }
+
+}
+
+@media only screen and (max-width:900px) {
+  .hamburger{
+    display: block;
+    cursor: pointer;
+  }
+  .hamburger .line1{
+    width: 30px;
+    height: 3px;
+    background: var(--text_color);
+    margin: 6px 0 ;
+
+  }
+  .navbar_io{
+    height: 500px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    background: var(--nav_background);
+    opacity: 0.8;
+    transition: 0.2s ;   
+    overflow: hidden;
+    z-index: +2; 
+  }
+  
+ 
+  .navbar_io .navlink_con{
+    display: block;
+  
+  }
+  .navbar_io .navlink_con{
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    margin-bottom: 200px;
+    
+    width: fit-content;
+    margin: 20px auto 0 auto;
+   
+    transition: 0.5s;
+  }
+  .logo_design{
+    display: none;
+  }
+  .navbar_io.active{
+    display: none;
+  }
+
+  .card_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+  }
+  .card_container .card_box .MuiPaper-root{
+    background-color: var(--nav_background);
+    color: var(--text_color);
+    margin-top: 20px;
+    border-radius: 10px;
+    min-width: 70vw;
   }
 
 }

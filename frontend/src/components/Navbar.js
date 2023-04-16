@@ -25,21 +25,28 @@ const shownavbar=()=>{
 
   const {user}=useAuthContext()
   return (
+
+<>
     <header>
       <div className="container">
-        <Link to="/">
-          <h1 className='logo_design'>Confe<b style={{color:"red"}}>Rence</b> Management</h1>
+        <Link className="navbar-brand" to="/">
+          <h1 className='logo_design'>Confe<b style={{color:"#1aac83"}}>Rence</b> Management</h1>
         </Link>
         <nav className='navbar_io' ref={navRef}>
-      <DarkMode/> 
+      
         {
           user && (
         <div className='navlink_con'>
+        <DarkMode/> 
+        <Link className="navbar-brand" to="/">
+        <h1 className='user_role'>Home</h1>
+        </Link>
         <span>{user.email}</span>
-        <Link to="/data">
-        <h1>{user.role}</h1>
+        {user.role==="admin"?  <Link className="navbar-brand" to="/data">
+        <h1 className='user_role'>{user.role}</h1>
        
-      </Link>
+      </Link>: <span><b>{user.role}</b></span>}
+  
          <button onClick={handleClick}>Logout</button>
        
          </div>
@@ -47,11 +54,12 @@ const shownavbar=()=>{
         }
         { !user && (
         <div className='navlink_con'>
-        <Link to="/login">
-          <h1>Login</h1>
+        <DarkMode/> 
+        <Link className="navbar-brand" to="/login">
+          <h1 className='log_role'>Login</h1>
         </Link>
-        <Link to="/signup">
-          <h1>Signup</h1>
+        <Link className="navbar-brand" to="/signup">
+          <h1 className='log_role'>Signup</h1>
         </Link>
       
         </div>
@@ -68,6 +76,7 @@ const shownavbar=()=>{
       </div>
      
     </header>
+    </>
   )
 }
 

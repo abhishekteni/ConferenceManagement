@@ -14,15 +14,16 @@ import Paper from '@mui/material/Paper';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import zIndex from '@mui/material/styles/zIndex'
+// import zIndex from '@mui/material/styles/zIndex'
 // import { DataGrid } from '@material-ui/data-grid'
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([
   ]);
-
+  // const [length,setLength]=useState(1)
+  const [page, setPage] = useState(0);
   const [sortColumn, setSortColumn] = useState('papertitle')
   const {papers, dispatch} = usePapersContext()
   const {user} = useAuthContext()
@@ -62,14 +63,16 @@ const Home = () => {
 
   useEffect(() => {
     const fetchPapers = async () => {
-      const response = await fetch('/api/papers',{
+      // console.log(page+"he")
+      const response = await fetch(`/api/papers/?p=${page}`,{
         headers : {
           'Authorization':`Bearer ${user.token}`
         }
       })
       const json = await response.json()
+
       if (response.ok) {
-        console.log(json[0].overall_score)
+        // console.log(json)
         function sortData(data, columnName) {
           for (let i = 0; i < data.length - 1; i++) {
             for (let j = i + 1; j < data.length; j++) {
@@ -86,6 +89,7 @@ const Home = () => {
         dispatch({type: 'SET_PAPERS', payload: sortData(json, sortColumn)})
 
         setData(papers)
+        
 
       }
     }
@@ -93,10 +97,17 @@ const Home = () => {
       fetchPapers()
 
     }
-  }, [dispatch,user,sortColumn])
+  }, [dispatch,user,sortColumn,page])
 
   const handleSort = (column) => {
     setSortColumn(column);
+  }
+  function handleNextPage() {
+    setPage(page + 1);
+  }
+
+  function handlePreviousPage() {
+    setPage(page - 1);
   }
   return (
     <>
@@ -115,23 +126,26 @@ const Home = () => {
             blog_status
           </TableSortLabel></TableCell>
             <TableCell align="right">Date</TableCell>
-            { (user.role=="admin")?<TableCell align="right"> Delete </TableCell>:''}
+            { (user.role==="admin")?<TableCell align="right"> Delete </TableCell>:''}
             <TableCell align="right">comment</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
         
-        {papers && papers.map((paper) => (
+        {papers ? papers.map((paper) => (
           <PaperDetails key={paper._id} paper={paper} />
           
-        ))}
+        )):<TableCell className='empty_tag'>"no papers"</TableCell>}
         
         </TableBody>
          {/*<button onClick={handleUpdate}>Update Column</button>*/}
         </Table>
         </TableContainer>
+        { page >0? <button className='pagination_btn' onClick={handlePreviousPage}>&lt;</button> : <button className='pagination_btn' >&lt;</button>}
+        
+        { page <1 ? <button className='pagination_btn' onClick={handleNextPage}>&gt;</button>:<button className='pagination_btn' >&gt;</button>}
         <div>
-      <Button variant="outlined" onClick={handleClickOpen}  sx={{
+      <Button className="add_btn" variant="outlined" onClick={handleClickOpen}  sx={{
         borderRadius: 50,
         width: "60px",
         height:'60px',
@@ -147,14 +161,18 @@ const Home = () => {
       }}>
         +
       </Button>
-      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { position: "fixed", width: "50%" ,top: 10, left: 'auto', m: 0, p:2 } }} >
+      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { position: "fixed", width: "50%" ,top: 10, left: 10, m: 0, p:2 } }} >
       <PaperForm />
       </Dialog>
+      {/*<div className='notification'>
+        <p>Welcome, {user.email}</p>
+        <span className='notification__progress'></span>
       </div>
-
+      </div>
+   
       
       <div style={{ height: 400, width: '100%' }}>
-
+ */}
     </div>
     </>
   )

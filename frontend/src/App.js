@@ -5,16 +5,11 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
-import PaperForm from './components/PaperForm';
+// import PaperForm from './components/PaperForm';
 import ProfileDetails from './pages/ProfileDetails'
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+// import { ThemeProvider, createTheme } from '@mui/material/styles';
+// import CssBaseline from '@mui/material/CssBaseline';
 import NotFound from './pages/NotFound';
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
 
 function App() {
   const {user}=useAuthContext()

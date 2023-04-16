@@ -5,7 +5,7 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
-import { Input } from '@mui/material';
+// import { Input } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,9 +14,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import { useState } from 'react';
+// import PdfViewer from './PdfViewer';
 
 
 
@@ -26,7 +27,7 @@ const PaperDetails = ({ paper }) => {
 
   const [selectedOption, setSelectedOption] = useState('pending');
   const [open, setOpen] = useState(false);
-  const [acceptall,SetAcceptall]=useState(false)
+  // const [acceptall,SetAcceptall]=useState(false)
   const [reviewerC,setReviewerC]=useState('')
   const [privateC,setPrivateC]=useState('')
   const [reviewername,setReviewerName]=useState('')
@@ -48,12 +49,12 @@ const PaperDetails = ({ paper }) => {
     const private_comment = privateC
     const overall_score2=overall_score1;
     const isDraft=draft_status;
-    console.log(overall_score2+"agfebf")
-    console.log(value+"ballo");
-    console.log(isDraft);
+    // console.log(overall_score2+"agfebf")
+    // console.log(value+"ballo");
+    // console.log(isDraft);
     setSelectedOption(e.target.value);
     // setBlogstatus(value)
-    console.log(selectedOption+"hello")
+    // console.log(selectedOption+"hello")
     if(!user){
       return
     }
@@ -80,14 +81,13 @@ const PaperDetails = ({ paper }) => {
     const json = await response.json()
 
     if (response.ok) {
-      if(json.isDraft==false){
+      if(json.isDraft===false){
         setReviewerC('')
         setPrivateC('')
       }
       dispatch({type: 'UPDATE_PAPER', payload: json})
     }
   }
-
 
 
 
@@ -113,6 +113,7 @@ const PaperDetails = ({ paper }) => {
   }
 
 
+    
   return (
    <> 
     <TableRow className="paper-details"
@@ -123,8 +124,8 @@ const PaperDetails = ({ paper }) => {
     <TableCell align="right">{paper.authors}</TableCell>
     <TableCell align="right">{paper.keywords}</TableCell>
     <TableCell align="right">{paper.overall_score}</TableCell>
-    <TableCell align="right">{paper.pdf_attachment}</TableCell>
-    { (user.role=="admin")? <TableCell align="right">   
+    <TableCell align="right"> {paper.pdf_attachment}</TableCell>
+    { (user.role==="admin")? <TableCell align="right">   
     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
  
 {/*<InputLabel id="demo-simple-select-standard-label">{paper.blog_status}</InputLabel>*/}
@@ -133,22 +134,6 @@ const PaperDetails = ({ paper }) => {
   id="demo-simple-select-standard"
   value={paper.blog_status}
   onChange={handleChange}
-  sx={{
-    '& .MuiSelect-icon': { color: 'black' },
-    '&:before, &:after': { borderBottomColor: 'black' },
-    '& .MuiListItem-root.Mui-selected': { backgroundColor: 'red' },
-    '& .MuiListItem-root.Mui-selected:hover': { backgroundColor: 'pink' },
-    '& .MuiList-root.Mui-menu-list': {
-      backgroundColor:
-        selectedOption === 'pending'
-          ? 'red'
-          : selectedOption === 'accept'
-          ? 'green'
-          : selectedOption === 'reject'
-          ? 'orange'
-          : 'inherit',
-    },
-  }}
 > 
 <MenuItem value="pending"  >pending</MenuItem>
   <MenuItem value="accept" >accept</MenuItem>
@@ -164,43 +149,48 @@ const PaperDetails = ({ paper }) => {
 
     <TableCell align="right">{formatDistanceToNow(new Date(paper.createdAt), { addSuffix: true })}</TableCell>
 
-    { (user.role=="admin")? <TableCell align="right"><Button variant="outlined" color="error" align="right" onClick={handleClick}>delete</Button></TableCell> : ''}
-    { (user.role=="admin" || user.role=="reviewer" )? <TableCell align="right">  <Button variant="outlined" onClick={handleClickOpen}>
+    { (user.role==="admin")? <TableCell align="right"><Button variant="outlined" color="error" align="right" onClick={handleClick}>delete</Button></TableCell> : ''}
+    { (user.role==="admin" || user.role==="reviewer" )? <TableCell align="right">  <Button variant="outlined" onClick={handleClickOpen}>
     comment
   </Button></TableCell>:<TableCell align="right">  <Button variant="outlined" onClick={handleClickOpen}>
   Check Status
 </Button></TableCell>}
     </TableRow>
     <Dialog open={open} onClose={handleClose}  fullWidth= {true}
-    maxWidth={"sm"}>
+    maxWidth={"md"}>
     <form onSubmit={handleChange}>
-    <DialogTitle>review details </DialogTitle>
+    <DialogTitle>Review Details </DialogTitle>
 
 
     <DialogContent dividers>
 
     <DialogContent>
-      <DialogContentText> 
-      
+    <p className='dialog_sub'>Private Comments to author</p>
+    <DialogContentText> 
       {(paper.isDraft===false)? paper.reviewer_comment.split(':??')[0] : ''}
       </DialogContentText>
       <DialogContentText>
-      reviewed BY: <b>{paper.reviewer_comment.split(':??')[1]} <br/>Draft Submitted: {paper.isDraft ===true ? "false":"true"}</b>
+      reviewed by: <b>{paper.reviewer_comment.split(':??')[1]} <br/>Draft Submitted: {paper.isDraft ===true ? "false":"true"}</b><br/><b>Your Score: </b>{paper.overall_score} 
        </DialogContentText>
        </DialogContent>
 
-       <DialogContent dividers>
-       <DialogContentText>
-       {((paper.isDraft===false)  && (paper.reviewer_comment.split(':??')[1] == user.email.split('@')[0]))? paper.private_comment : ''}
-     { /*(user.role=="admin" || user.role=="reviewer" )? paper.private_comment : ''*/}
-     
-      </DialogContentText>
-      </DialogContent>
-      <DialogContentText >
-      <b>Your Score: </b>{paper.overall_score} 
+       {
+        ((paper.private_comment) && (user.role==="admin" || user.role==="reviewer" )) ?
+        <DialogContent dividers>
+        <p className='dialog_sub'>Private Comments to other reviewer or Admin:</p>
+        <DialogContentText>
+        {((paper.isDraft===false)  && (paper.reviewer_comment.split(':??')[1] === user.email.split('@')[0]))? paper.private_comment : ''}
+      { /*(user.role=="admin" || user.role=="reviewer" )? paper.private_comment : ''*/}
+      
        </DialogContentText>
+       </DialogContent>
+       :
+       ''
+
+       }
+     
        
-      { (user.role=="admin" || user.role=="reviewer" )?
+      { (user.role==="admin" || user.role==="reviewer" )?
       <div>
       <DialogContent dividers>
       <TextField
@@ -225,7 +215,7 @@ const PaperDetails = ({ paper }) => {
       fullWidth
       multiline
       variant="standard"
-      value={(paper.isDraft ===true && (paper.reviewer_comment.split(':??')[1] == user.email.split('@')[0])) ? privateC|| paper.private_comment:privateC}
+      value={(paper.isDraft ===true && (paper.reviewer_comment.split(':??')[1] === user.email.split('@')[0])) ? privateC|| paper.private_comment:privateC}
       onChange={(e) => {setPrivateC(e.target.value) }}
     />
     </DialogContent>
@@ -248,7 +238,7 @@ const PaperDetails = ({ paper }) => {
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClose}>Cancel</Button>
-        {(user.role=="admin" || user.role=="reviewer" )? <><Button type="submit" onClick={()=>setDraft_status(true)}>Save as a Draft</Button> <Button type="submit" onClick={()=>setDraft_status(false)}>Publish</Button></>: ''}
+        {(user.role==="admin" || user.role==="reviewer" )? <><Button type="submit" onClick={()=>setDraft_status(true)}>Save as a Draft</Button> <Button type="submit" onClick={()=>setDraft_status(false)}>Publish</Button></>: ''}
       
       
     </DialogActions>
