@@ -2,6 +2,7 @@ import { useState} from "react"
 import { usePapersContext } from "../hooks/usePapersContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 const PaperForm = () => {
+  // here we have used multiple reacthooks 
   const { dispatch } = usePapersContext()
   const {user} = useAuthContext()
   const [papertitle, setPapertitle] = useState('')
@@ -11,7 +12,7 @@ const PaperForm = () => {
   const [pdf_attachment, setPdf_attachment] = useState('')
   const [error, setError] = useState(null)
   const [emptyFields, setEmptyFields] = useState([])
-
+// here when user clicks handlesubmit we post the form to the database by method'POST' plus we even check whether user has filled all the attributes
     const handleSubmit = async (e) => {
       e.preventDefault()
       if(!user){

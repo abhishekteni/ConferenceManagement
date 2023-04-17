@@ -17,19 +17,25 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import MoonLoader from "react-spinners/MoonLoader";
 
 function ProfileDetails() {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [userno,setUserno]=useState();
   const [admincount,setAdmincount]=useState();
   const [authorcnt,setAuthor]=useState();
   const [reviewercnt,setReviewercnt]=useState();
   const [blogcount,setBlogcount] = useState();
   const [blog_data,setBlogData] = useState([]);
-  // const [role,setRole]=useState()
   const {user} = useAuthContext()
-  // const {papers, dispatch} = usePapersContext()
+// loading properties
+  const override = {
+    display: "block",
+    margin: "20% auto",
+    borderColor: "#1aac83",
+  };
+
   const handleChange = async (e, userId) => {
     const value = e.target.value;
     // console.log(userId)
@@ -55,7 +61,7 @@ function ProfileDetails() {
     if (response.ok) {
       // dispatch({type: 'UPDATE_USER', payload: json})
       // setUsers(json)
-
+      setLoading(false)
       
 
       alert("user updated sucessfully")
@@ -72,6 +78,7 @@ function ProfileDetails() {
       setAdmincount(response.data.filter(item => item.role === 'admin').length);
       setAuthor(response.data.filter(item => item.role === 'author').length);
       setReviewercnt(response.data.filter(item => item.role === 'reviewer').length);
+      setLoading(false);
     })
     .catch((error) => {
       console.log(error);
@@ -90,6 +97,7 @@ function ProfileDetails() {
       .then(response => {
         setUserno(response.data.length)
         setUsers(response.data);
+        setLoading(false);
         setAdmincount(response.data.filter(item => item.role === 'admin').length);
         setAuthor(response.data.filter(item => item.role === 'author').length);
         setReviewercnt(response.data.filter(item => item.role === 'reviewer').length);
@@ -106,6 +114,7 @@ function ProfileDetails() {
       })
         .then(response => {
           setBlogData(response.data);
+          setLoading(false);
           setBlogcount(response.data.length)
         })
         .catch(error => {
@@ -117,6 +126,18 @@ function ProfileDetails() {
 
   return (
     <>
+
+    {
+      loading ? <MoonLoader
+      color="#1aac83"
+      loading={loading}
+      cssOverride={override}
+      size={75}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+    />:
+    
+    
     <div className='card_container'>
     <div className='card_box'>
     <Card sx={{ minWidth: 275,maxWidth: 280,minHeight:170 }}>
@@ -201,6 +222,11 @@ function ProfileDetails() {
 </Card>
 </div>
   </div>
+
+    }
+    {
+      loading ? '':
+    
     <TableContainer component={Paper}>
     <Table sx={{ minWidth: 650 }} aria-label="simple table">
       <TableHead>
@@ -244,6 +270,7 @@ function ProfileDetails() {
       </TableBody>
     </Table>
     </TableContainer>
+      }
     </>
   );
 }

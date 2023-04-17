@@ -1,9 +1,11 @@
+// Darkmode for creating visually appealing UI
 import React from "react";
 import { ReactComponent as Sun } from "./Sun.svg";
 import { ReactComponent as Moon } from "./Moon.svg";
 import "./DarkMode.css";
 
 const DarkMode = () => {
+    // here we set a attribute to the body tag which we can access and set color accordingly
     const setDarkMode=()=>{
         document.querySelector("body").setAttribute('data-theme','dark')
     }
@@ -14,7 +16,7 @@ const DarkMode = () => {
         if(e.target.checked) setDarkMode();
         else setLightMode()
     }
-    // setDarkMode();
+    // toggleTheme toggles b/w setDarkMode() to setLightmode();
     return (
         <div className='dark_mode'>
             <input

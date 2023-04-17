@@ -17,7 +17,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { useState } from 'react';
 // import PdfViewer from './PdfViewer';
 
-
+// we set many different react hooks to get values which are required
 
 const PaperDetails = ({ paper }) => {
   const { dispatch } = usePapersContext();
@@ -31,6 +31,7 @@ const PaperDetails = ({ paper }) => {
   const [overall_score1,setOverallScore]=useState(0)
   const [draft_status,setDraft_status]=useState(false)
 
+  // for save as draft we have used a boolean object in the database which tells the status by that we change the mode
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -39,6 +40,7 @@ const PaperDetails = ({ paper }) => {
     setOpen(false);
   };
   
+  // in order to reduce the objects in paper schema, we merged reviewer name in the reviewer comment and accessed it by splitting
   const handleChange = async (e) => {
     e.preventDefault();
     const value = e.target.value;
@@ -82,12 +84,20 @@ const PaperDetails = ({ paper }) => {
     }
   }
 
+// here we are checking whether the url posted by the user is valid or not, if it is not valid then we simily paste the url, else we fetch it by <a> tag
+  const isValidUrl = urlString=> {
+    var urlPattern = new RegExp('^(https?:\\/\\/)?'+ // validate protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // validate domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // validate OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // validate port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // validate query string
+    '(\\#[-a-z\\d_]*)?$','i'); // validate fragment locator
+  return !!urlPattern.test(urlString);
+}
 
 
 
-
-
-
+// Delete functionality
   const handleClick = async () => {
     if(!user){
       return
@@ -117,7 +127,7 @@ const PaperDetails = ({ paper }) => {
     <TableCell align="right">{paper.authors}</TableCell>
     <TableCell align="right">{paper.keywords}</TableCell>
     <TableCell align="right">{paper.overall_score}</TableCell>
-    <TableCell align="right"> {paper.pdf_attachment}</TableCell>
+    <TableCell align="right">{ isValidUrl(paper.pdf_attachment) ? <a className="pdf_link" href={paper.pdf_attachment}><Button variant="outlined" color="success">Link</Button></a>:paper.pdf_attachment }   </TableCell>
     { (user.role==="admin")? <TableCell align="right">   
     <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
  
@@ -160,7 +170,7 @@ const PaperDetails = ({ paper }) => {
     <DialogContent>
     <p className='dialog_sub'>Private Comments to author</p>
     <DialogContentText> 
-      {(paper.isDraft===false)? paper.reviewer_comment.split(':??')[0] : ''}
+      {(paper.isDraft===false) ? paper.reviewer_comment.split(':??')[0] : ''}
       </DialogContentText>
       <DialogContentText>
       reviewed by: <b>{paper.reviewer_comment.split(':??')[1]} <br/>Draft Submitted: {paper.isDraft ===true ? "false":"true"}</b><br/><b>Your Score: </b>{paper.overall_score} 
@@ -172,7 +182,7 @@ const PaperDetails = ({ paper }) => {
         <DialogContent dividers>
         <p className='dialog_sub'>Private Comments to other reviewer or Admin:</p>
         <DialogContentText>
-        {((paper.isDraft===false)  && (paper.reviewer_comment.split(':??')[1] === user.email.split('@')[0]))? paper.private_comment : ''}
+        {(paper.isDraft===false)? paper.private_comment : ''}
       
       
        </DialogContentText>
@@ -195,7 +205,7 @@ const PaperDetails = ({ paper }) => {
         fullWidth
         multiline
         variant="standard"
-        value={paper.isDraft ===true ? reviewerC|| paper.reviewer_comment.split(':??')[0]:reviewerC}
+        value={(paper.isDraft ===true && (paper.reviewer_comment.split(':??')[1] === user.email.split('@')[0])) ? reviewerC|| paper.reviewer_comment.split(':??')[0]:reviewerC}
         onChange={(e) => {setReviewerC(e.target.value); setReviewerName(user.email)}}
       />
 

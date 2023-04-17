@@ -5,6 +5,7 @@ import { useLogout } from '../hooks/useLogout'
 import DarkMode from './Darkmode'
 import "./DarkMode.css";
 const Navbar = () => {
+  // logout btn
   const logout = useLogout()
 
   const navRef=useRef();
@@ -12,7 +13,7 @@ const Navbar = () => {
     logout()
   }
 
-
+// responsive navbar
 const shownavbar=()=>{
   navRef.current.classList.toggle('active')
 }
@@ -22,6 +23,7 @@ const shownavbar=()=>{
 
 <>
     <header>
+    {/* used combination of BOOTSTRAP(container, navbar-brand) and custom css in the navbar */}
       <div className="container">
         <Link className="navbar-brand" to="/">
           <h1 className='logo_design'>Confe<b style={{color:"#1aac83"}}>Rence</b> Management</h1>
