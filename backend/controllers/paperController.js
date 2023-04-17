@@ -179,7 +179,7 @@ const updateUser = async (req, res) => {
 
   res.status(200).json(user)
 }
-
+// future purpose 
 const updateallPaper = async (req, res) => {
   const { id } = req.params
 
