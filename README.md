@@ -24,15 +24,15 @@ In order to run this project locally, simply fork and clone the repository or do
 - Go to terminal -> New terminal (If you are using VS code)
 - Split your terminal into two (run the client on one terminal and the server on the other terminal)
 
-**Type the below in one terminal:**
-cd .\ConferenceManagement\frontend\
-npm i
+**Type the below in one terminal:**\
+cd .\ConferenceManagement\frontend\  \
+npm i   \
 npm start 
 
-**Type the below in other terminal:**
-cd .\ConferenceManagement\backend\
-npm i
-npm run dev
+**Type the below in other terminal:**\
+cd .\ConferenceManagement\backend\    \
+npm i      \
+npm run dev    
 
 # Authors(Group 7)
 
