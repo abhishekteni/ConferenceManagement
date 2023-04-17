@@ -44,3 +44,8 @@ npm run dev
 - Abhishek Prasad Teni
 - Cian O'Keeffe
 - Rence Thomas
+
+# github Link
+```
+https://github.com/abhishekteni/ConferenceManagement
+```
