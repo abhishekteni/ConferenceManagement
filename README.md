@@ -1,4 +1,4 @@
-# ConferenceManagement
+# Conference Management System
 
 # Introduction
 This web application provides an online platform for the researchers and reviewers to create and analyse respective papers and provide constructive feedback to 
