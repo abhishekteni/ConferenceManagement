@@ -123,9 +123,9 @@ const PaperDetails = ({ paper }) => {
     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     
   >
-    <TableCell align="left">{paper.papertitle}</TableCell>
-    <TableCell align="right">{paper.authors}</TableCell>
-    <TableCell align="right">{paper.keywords}</TableCell>
+    <TableCell align="left">{paper.papertitle.substring(0, 20)}</TableCell>
+    <TableCell align="right">{paper.authors.substring(0, 20)}</TableCell>
+    <TableCell align="right">{paper.keywords.substring(0, 20)}</TableCell>
     <TableCell align="right">{paper.overall_score}</TableCell>
     <TableCell align="right">{ isValidUrl(paper.pdf_attachment) ? <a className="pdf_link" href={paper.pdf_attachment}><Button variant="outlined" color="success">Link</Button></a>:paper.pdf_attachment }   </TableCell>
     { (user.role==="admin")? <TableCell align="right">   
