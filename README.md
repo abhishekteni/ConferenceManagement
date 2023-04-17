@@ -45,7 +45,3 @@ npm run dev
 - Cian O'Keeffe
 - Rence Thomas
 
-# github Link
-```
-https://github.com/abhishekteni/ConferenceManagement
-```
