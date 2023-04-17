@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-
+// paper schema used only 1 schema for the entire paper scenario
 const paperSchema = new Schema({
   papertitle: {
     type: String,

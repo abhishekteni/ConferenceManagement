@@ -18,7 +18,8 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/papers', paperRoutes)
 app.use('/api/user', userRoutes)
-// connect to db
+// connect to database
+// MONGO_URI string is in the .env folder for security purpose
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     // listen for requests

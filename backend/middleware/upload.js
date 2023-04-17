@@ -11,7 +11,8 @@ const multer = require('multer')
 //     }
 // })
 
-
+// pdf upload using multer planning to do in the future purpose, I have used earlier it was working perfectly 
+// due to some issue we have revert to an alternative
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

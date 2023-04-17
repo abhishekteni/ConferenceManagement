@@ -6,13 +6,12 @@ const mongoose = require('mongoose')
 // get all papers
 const getPapers = async (req, res) => {
 
-
+// we take user id and user role and assign responsibility accordingly
   const user_id = req.user._id
   const admin = req.user.role
-  const search = req.query.u
+  // backend pagination we skip the files and limit it by pagenumber
   const page = req.query.p||0
   const papersPerPage = 8
-  // console.log(admin)
   if(admin=='admin'){
       const papers = await Paper.find({}).sort({createdAt: -1}).skip(page*papersPerPage).limit(papersPerPage)
       res.status(200).json(papers)
@@ -29,6 +28,7 @@ const getPapers = async (req, res) => {
   }
 }
 
+// get all paper for excel download and blogcount
 const getallPapers = async (req, res) => {
 
 
@@ -49,7 +49,7 @@ const getallPapers = async (req, res) => {
   }
 }
 
-// get all user
+// get all user for admin page and user count , user excel download
 
 const getallUser = async (req, res) => {
 
@@ -68,7 +68,7 @@ const getallUser = async (req, res) => {
     res.status(200).json(papers)
   }
 }
-// get a single paper
+// get a single paper for future purpose
 const getPaper = async (req, res) => {
   const { id } = req.params
 
@@ -143,7 +143,7 @@ const deletePaper = async (req, res) => {
   res.status(200).json(paper)
 }
 
-// update a paper
+// update a paper accept and reject functionality, comments, overall score
 const updatePaper = async (req, res) => {
   const { id } = req.params
 
@@ -161,7 +161,7 @@ const updatePaper = async (req, res) => {
 
   res.status(200).json(paper)
 }
-
+// updating the user role in the admin page
 const updateUser = async (req, res) => {
   const { id } = req.params
 

@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 const Schema = mongoose.Schema
 // validator is used for creating appropriate email_id and Strong Password
 const validator = require('validator') 
+
+// assigned role in user schema 
 const userSchema = new Schema({
     email: {
       type: String,
